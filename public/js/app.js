@@ -6,7 +6,10 @@ $(function () {
         lineWrapping: true,
         spellChecker: false,
         toolbar: false,
-        toolbarTips: false
+        toolbarTips: false,
+        renderingConfig: {
+            codeSyntaxHighlighting: true,
+        }
     });
 
     // Setup key to access API backend
@@ -66,7 +69,7 @@ $(function () {
     var form_modal = UIkit.modal("#modal-note-form");
     $("#modal-note-form").on('show', function () {
         $("textarea[name='note_text']", "#note_form").focus();
-        setTimeout(function() {
+        setTimeout(function () {
             md_editor.codemirror.refresh();
             md_editor.codemirror.focus();
         }, 0);
@@ -235,6 +238,12 @@ $(function () {
             $(el).prepend(buttons);
             $("#feed").append(el);
         });
+
+        if(!notes.length) {
+            var el = $('<div class="note_block uk-card uk-card-default uk-card-body uk-width-1-1"></div>');
+            $(el).append('<span uk-icon="icon: happy"></span> Nothing matched...');
+            $("#feed").append(el);
+        }
     }
 
     function edit_form(note_id, note_text) {
