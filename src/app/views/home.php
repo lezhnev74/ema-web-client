@@ -34,15 +34,43 @@
                 <div class="uk-navbar-item">
                     <div uk-search-icon id="search_icon" style=""></div>
                     <form class="uk-search uk-search-navbar">
-                        <input autocomplete="off" class="uk-search-input" type="search" placeholder="[s]earch..." id="search_input">
+                        <input autocomplete="off" class="uk-search-input" type="search" placeholder="[s]earch..."
+                               id="search_input">
                     </form>
                 </div>
 
+
+            </div>
+            <div class="uk-navbar-right">
+                <div class="uk-navbar-item">
+                    <a class="uk-button uk-button-default" href="#" id="post_note_button">[p]ost a note</a>
+                </div>
             </div>
         </nav>
+
+
         <div uk-grid id="feed"></div>
         <br><br>
         <a href="#" uk-totop uk-scroll></a>
+    </div>
+</div>
+
+<div id="modal-note-form" uk-modal="center: true" class="uk-modal-container">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-outside" type="button" uk-close></button>
+        <form id="note_form">
+            <input type="hidden" name="note_id">
+            <div class="uk-modal-body">
+                <div class="uk-margin">
+                    <textarea class="uk-textarea" rows="5" placeholder="" name="note_text"></textarea>
+                </div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <div uk-spinner style="visibility: hidden;" id="io_form"></div>
+                <input type="submit" class="uk-button uk-button-primary" value="Save" />
+            </div>
+        </form>
+        <div class="uk-modal-caption">Markdown supported</div>
     </div>
 </div>
 
