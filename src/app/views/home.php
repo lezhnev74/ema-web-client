@@ -23,6 +23,9 @@
 <script src="/js/ajaxq.js"></script>
 <script src="/js/app.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <div>
     <div class="uk-container">
         <nav class="uk-navbar-container" style="background-color: transparent;" uk-navbar>
@@ -62,7 +65,7 @@
             <input type="hidden" name="note_id">
             <div class="uk-modal-body">
                 <div class="uk-margin">
-                    <textarea class="uk-textarea" rows="5" placeholder="" name="note_text"></textarea>
+                    <textarea class="uk-textarea" id="note_form_textarea" rows="5" placeholder="" name="note_text"></textarea>
                 </div>
             </div>
             <div class="uk-modal-footer uk-text-right">

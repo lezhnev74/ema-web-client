@@ -1,5 +1,14 @@
 $(function () {
 
+    var md_editor = new SimpleMDE({
+        element: document.getElementById("note_form_textarea"),
+        indentWithTabs: true,
+        lineWrapping: true,
+        spellChecker: false,
+        toolbar: false,
+        toolbarTips: false
+    });
+
     // Setup key to access API backend
     $.ajaxSetup({
         headers: {"Authorization": "Bearer " + access_token}
@@ -57,14 +66,19 @@ $(function () {
     var form_modal = UIkit.modal("#modal-note-form");
     $("#modal-note-form").on('show', function () {
         $("textarea[name='note_text']", "#note_form").focus();
+        setTimeout(function() {
+            md_editor.codemirror.refresh();
+            md_editor.codemirror.focus();
+        }, 0);
+
     });
     $("#modal-note-form").on('hide', function () {
-        recentNotes();
+        refresh_feed();
     });
 
     $('body').on('click', ".edit_note", function (e) {
         var note_id = $(this).parents('.note_block').attr('note_id');
-        var note_text = $(this).parents('.note_block').find('.note_text').text();
+        var note_text = $(this).parents('.note_block').find('.note_text').data('source_text');
         edit_form(note_id, note_text);
         return false;
     });
@@ -100,26 +114,42 @@ $(function () {
 
         // only react if no input is focussed
         if (!$(":input").is(":focus")) {
-            event.preventDefault();
+
 
             if (event.keyCode == 115) {
                 $("#search_input").focus();
             } else if (event.keyCode == 112) {
                 edit_form('', '');
             }
+
+            event.preventDefault();
+            return false;
         }
 
     });
     $("#search_input").keyup(_.debounce(searchNotes, 500));
 
 
-// Get notes qith query
+    ///
+    ///
+    ///
+
+    function refresh_feed() {
+        // if search is not empty - make searching again, otherwise reload recent feed
+        var query = $("#search_input").val().trim();
+        if (!query.length) {
+            recentNotes();
+        } else {
+            searchNotes(query);
+        }
+    }
+
     function searchNotes(query) {
 
 
         var query = $("#search_input").val().trim();
         if (!query.length) {
-            drawNotes([]);
+            recentNotes();
             return;
         }
 
@@ -189,8 +219,15 @@ $(function () {
     function drawNotes(notes) {
         $("#feed").html('');
         $(notes).each(function (i, e) {
-            el = $('<div class="note_block uk-card uk-card-default uk-card-body uk-width-1-1"></div>');
-            $(el).prepend('<div class="note_text">' + e.note_text + '</div>');
+            var el = $('<div class="note_block uk-card uk-card-default uk-card-body uk-width-1-1"></div>');
+
+            var html_from_md = md_editor.options.previewRender(e.note_text);
+            var note_text_node = $('<div class="note_text"></div>');
+            $(note_text_node).html(html_from_md);
+            $(note_text_node).data('source_text', e.note_text);
+            $(el).append(note_text_node);
+
+            $(el).prepend();
             $(el).attr('note_id', e.id);
             var buttons = $('<div class="uk-align-right"></div>');
             $(buttons).append('<a href="#" class="edit_note  uk-icon-link uk-margin-small-left" uk-icon="icon: file-edit"></a>');
@@ -202,7 +239,8 @@ $(function () {
 
     function edit_form(note_id, note_text) {
         $("input[name='note_id']", "#note_form").val(note_id);
-        $("textarea[name='note_text']", "#note_form").val(note_text);
+        //$("textarea[name='note_text']", "#note_form").val(note_text);
+        md_editor.value(note_text);
 
         form_modal.show();
     }
