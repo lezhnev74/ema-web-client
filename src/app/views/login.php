@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>EMApp</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+    <link rel="manifest" href="/icon/manifest.json">
+    <link rel="mask-icon" href="/icon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+    <meta name="msapplication-config" content="/icon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
 
 
-<a href="" id="google_auth_link" style="display: none;">Login with Google</a>
+<div>
+    <div class="uk-container">
+        <div class="uk-card uk-card-body">
+            <h3 class="uk-card-title">Please use your gmail account</h3>
+            <div class="uk-card-body uk-card-default">
+                <a href="#" class="uk-button uk-button-default" id="google_auth_link">
+                    <span uk-icon="icon: google"></span>
+                    Login with Google
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<link rel="stylesheet" href="/uikit/css/uikit.min.css"/>
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+<script src="/uikit/js/uikit.min.js"></script>
+<script src="/uikit/js/uikit-icons.min.js"></script>
 
 <script>
     $(function () {
