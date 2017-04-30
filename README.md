@@ -18,3 +18,9 @@ It is based on markdown and has fast search function.
 This app is written with PHP & JS code.
 You need to setup this app on your server and fill out `.env` file (see also how to configure [server app](https://github.com/lezhnev74/ema)).
 After that you can just open the app in your browser.
+
+```
+cp .env.example .env
+# then edit .env file
+composer update
+```
